@@ -1,12 +1,12 @@
+let ball, playground;
+let posX = 0, posY = 0;
+
 async function requestPermission() {
   if (typeof DeviceMotionEvent.requestPermission === 'function') {
     try {
       const response = await DeviceMotionEvent.requestPermission();
-      if (response === 'granted') {
-        initSensors();
-      } else {
-        alert("Permission denied.");
-      }
+      if (response === 'granted') initSensors();
+      else alert("Permission denied.");
     } catch (err) {
       console.error(err);
     }
@@ -16,17 +16,30 @@ async function requestPermission() {
 }
 
 function initSensors() {
-  window.addEventListener("devicemotion", (event) => {
-    document.getElementById("acc-x").textContent = event.acceleration.x?.toFixed(2) || 0;
-    document.getElementById("acc-y").textContent = event.acceleration.y?.toFixed(2) || 0;
-    document.getElementById("acc-z").textContent = event.acceleration.z?.toFixed(2) || 0;
-  });
+  ball = document.getElementById("ball");
+  playground = document.getElementById("playground");
 
   window.addEventListener("deviceorientation", (event) => {
-    document.getElementById("alpha").textContent = event.alpha?.toFixed(2) || 0;
-    document.getElementById("beta").textContent = event.beta?.toFixed(2) || 0;
-    document.getElementById("gamma").textContent = event.gamma?.toFixed(2) || 0;
+    // event.gamma: 左右 [-90, 90]
+    // event.beta: 前后 [-180, 180]
+    moveBall(event.gamma, event.beta);
   });
 }
 
-window.onload = () => { requestPermission(); };
+function moveBall(gamma, beta) {
+  if (!ball || !playground) return;
+
+  const playgroundWidth = playground.clientWidth;
+  const playgroundHeight = playground.clientHeight;
+
+  // 将角度转换为坐标
+  posX = (gamma / 45) * (playgroundWidth / 2 - 20);
+  posY = (beta / 45) * (playgroundHeight / 2 - 20);
+
+  // 更新位置
+  ball.style.left = (playgroundWidth / 2 + posX) + "px";
+  ball.style.top = (playgroundHeight / 2 + posY) + "px";
+}
+
+window.onload = () => requestPermission();
+
