@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensor Demo App</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 40px; }
+    h1 { color: #2b7a78; }
+    .sensor-box { border: 2px solid #2b7a78; border-radius: 12px; padding: 20px; margin: 20px auto; width: 300px; background: #def2f1; box-shadow: 2px 2px 6px rgba(0,0,0,0.2);}
+  </style>
+</head>
+<body>
+  <h1>📱 Sensor WebApp</h1>
+  <p>Move or tilt your phone to see sensor data!</p>
+
+  <div class="sensor-box">
+    <h3>Accelerometer</h3>
+    <p>X: <span id="acc-x">0</span></p>
+    <p>Y: <span id="acc-y">0</span></p>
+    <p>Z: <span id="acc-z">0</span></p>
+  </div>
+
+  <div class="sensor-box">
+    <h3>Device Orientation</h3>
+    <p>Alpha (Z): <span id="alpha">0</span></p>
+    <p>Beta (X): <span id="beta">0</span></p>
+    <p>Gamma (Y): <span id="gamma">0</span></p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
